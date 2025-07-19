@@ -17,6 +17,24 @@ void print_board(){
     }
 }
 
+char user_choice(){
+    char choice;
+
+    cout << "Enter your choice 'X' or 'O': ";
+    cin >> choice;
+
+    while (choice != 'X' || choice != 'O'){
+        cout << "Invalid input. Try again." << endl;
+        cout << "Enter your choice 'X' or 'O': ";
+        cin >> choice;
+    }
+
+    if (choice == 'x') choice = 'X';
+    if (choice == 'o') choice = 'O';
+    
+    return choice;
+}
+
 int main(){
     print_board();
     return 0;
