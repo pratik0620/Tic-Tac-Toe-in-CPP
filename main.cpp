@@ -17,22 +17,43 @@ void print_board(){
     }
 }
 
+//Function to get user's choice X or O
 char user_choice(){
     char choice;
 
     cout << "Enter your choice 'X' or 'O': ";
     cin >> choice;
 
-    while (choice != 'X' || choice != 'O'){
+    if (choice == 'x') choice = 'X';
+    if (choice == 'o') choice = 'O';
+
+    while (choice != 'X' && choice != 'O'){
         cout << "Invalid input. Try again." << endl;
         cout << "Enter your choice 'X' or 'O': ";
         cin >> choice;
+
+        if (choice == 'x') choice = 'X';
+        if (choice == 'o') choice = 'O';
     }
 
-    if (choice == 'x') choice = 'X';
-    if (choice == 'o') choice = 'O';
-    
     return choice;
+}
+
+//Taking game input from user
+int user_input(){
+    int index[3][3] = {{1,2,3}, {4,5,6}, {7,8,9}};
+    int input;
+
+    cout << "Enter the number where you want to mark: ";
+    cin >> input;
+
+    while (input<1 || input>9){
+        cout << "Invalid Input. Try again." << endl;
+        cout << "Enter number between 1 and 9: " << endl;
+        cin >> input;
+    }
+
+    return input;
 }
 
 int main(){
