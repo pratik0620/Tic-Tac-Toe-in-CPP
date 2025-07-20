@@ -129,12 +129,12 @@ int main(){
     bool play = true;
     char ch;
     char player1, player2;
-    get_player_symbol(player1, player2);
     bool is_game_over = false;
     int turn = 0;           //even - Player1 , odd - Player2
 
     while (play){
-
+        get_player_symbol(player1, player2);
+        
         while(!is_game_over && turn < 9){
             print_board();
 
