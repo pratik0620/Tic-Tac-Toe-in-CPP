@@ -7,6 +7,8 @@ char board[3][3] = { {'1','2','3'}, {'4','5','6'}, {'7','8','9'} };
 
 //Function to print board
 void print_board(){
+    cout << "====================" << endl;
+    cout << endl;
     for(int i=0; i<3; i++){
         for(int j=0; j<3; j++){
             cout << board[i][j];
@@ -16,6 +18,7 @@ void print_board(){
         if(i<2){ cout << "--+---+--" << endl; }
     }
     cout << endl;
+    cout << "====================" << endl;
 }
 
 //Function to get user's choice X or O
@@ -43,13 +46,16 @@ void get_player_symbol(char &p1, char &p2){
 int user_input(char &player){
     int input;
 
+    cout << endl;
     cout << "Enter the number where you want to mark " << player << " : ";
     cin >> input;
+    cout << endl;
 
     while (input<1 || input>9){
         cout << "Invalid Input. Try again." << endl;
-        cout << "Enter number between 1 and 9: " << endl;
+        cout << "Enter number between 1 and 9: ";
         cin >> input;
+        cout << endl;
     }
 
     return input;
@@ -67,12 +73,45 @@ bool give_user_input(int n, char p){
 
     if (board[row][col] == 'X' || board[row][col] == 'O') {
         cout << "Cell already taken!" << endl;
+        cout << endl;
         return false;
     }
 
     board[row][col] = p;
 
     return true;
+}
+
+//Function to check win
+bool check_win(){
+    //Check for row
+    for(int i=0; i<3; i++){
+        if(board[i][0] == board[i][1] && board[i][1] == board[i][2]){
+            return true;
+        }
+    }
+    
+    //Check for column
+    for(int j=0; j<3; j++){
+        if(board[0][j] == board[1][j] && board[1][j] == board[2][j]){
+            return true;
+        }
+    }
+
+    //Check for diagonal
+    if(board[0][0] == board[1][1] && board[1][1] == board[2][2]){ return true; }
+    if(board[0][2] == board[1][1] && board[1][1] == board[2][0]){ return true; }
+
+    return false;
+}
+
+//Function to check draw
+bool check_draw(int n){
+    if(n==9){
+        return true;
+    } else {
+        return false;
+    }
 }
 
 int main(){
@@ -93,11 +132,20 @@ int main(){
             continue;
         }
 
+        is_game_over = check_win();
         turn++;
+        is_game_over = check_draw(turn);  
     }
 
     print_board();
-    cout << "Game Over";
+    cout << endl;
+    cout << "Game Over" << endl;
+    cout << endl;
+    if(check_win()){
+        cout << "Winner is " << ((turn%2 == 0) ? player2 : player1) << endl;
+    } else if (check_draw) {
+        cout << "It is a draw." << endl;
+    }
     
     return 0;
 }
