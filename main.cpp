@@ -134,7 +134,7 @@ int main(){
 
     while (play){
         get_player_symbol(player1, player2);
-        
+
         while(!is_game_over && turn < 9){
             print_board();
 
@@ -161,7 +161,7 @@ int main(){
         cout << endl;
 
         if(check_win()){
-            cout << "Winner is " << ((turn%2 == 0) ? player2 : player1) << endl;
+            cout << "Winner is " << ((turn%2 == 0) ? player1 : player2) << endl;
         } else if (check_draw(turn)) {
             cout << "It is a draw." << endl;
         }
