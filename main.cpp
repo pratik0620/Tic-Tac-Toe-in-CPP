@@ -114,38 +114,73 @@ bool check_draw(int n){
     }
 }
 
+//Function to reset board
+void reset_board(){
+    char count = '1';
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            board[i][j] = count++;
+        }
+    }
+}
+
 int main(){
+
+    bool play = true;
+    char ch;
     char player1, player2;
     get_player_symbol(player1, player2);
     bool is_game_over = false;
     int turn = 0;           //even - Player1 , odd - Player2
 
-    while(!is_game_over && turn < 9){
-        print_board();
+    while (play){
 
-        char current_player = (turn%2 == 0) ? player1 : player2;
-        
-        int move = user_input(current_player);
-        bool valid = give_user_input(move, current_player);
+        while(!is_game_over && turn < 9){
+            print_board();
 
-        if(!valid){
-            continue;
+            char current_player = (turn%2 == 0) ? player1 : player2;
+            
+            int move = user_input(current_player);
+            bool valid = give_user_input(move, current_player);
+
+            if(!valid){
+                continue;
+            }
+
+            is_game_over = check_win();
+            if (!is_game_over) {
+                turn++;
+                is_game_over = check_draw(turn);
+            } 
         }
 
-        is_game_over = check_win();
-        turn++;
-        is_game_over = check_draw(turn);  
+        print_board();
+
+        cout << endl;
+        cout << "Game Over" << endl;
+        cout << endl;
+
+        if(check_win()){
+            cout << "Winner is " << ((turn%2 == 0) ? player2 : player1) << endl;
+        } else if (check_draw(turn)) {
+            cout << "It is a draw." << endl;
+        }
+        
+        cout << endl;
+        cout << "====================" << endl;
+        cout << "Do you want to continue playing ? (Y/N): ";
+        cin >> ch;
+        if(ch == 'N' || ch == 'n') { play = false; }
+
+        //Reset Everything
+        reset_board();
+        is_game_over = false;
+        turn = 0; 
     }
 
-    print_board();
     cout << endl;
-    cout << "Game Over" << endl;
-    cout << endl;
-    if(check_win()){
-        cout << "Winner is " << ((turn%2 == 0) ? player2 : player1) << endl;
-    } else if (check_draw) {
-        cout << "It is a draw." << endl;
-    }
-    
+    cout << "====================" << endl;
+    cout << "Game Ended" << endl;
+ 
     return 0;
 }
